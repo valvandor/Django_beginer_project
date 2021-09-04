@@ -6,25 +6,29 @@ links_menu = [
     {'href': 'contact', 'name': 'контакты'},
 ]
 
-titles = {
-    'main': 'магазин',
-    'product': 'продукты',
-    'contact': 'контакты',
-}
-
-content = {
-    'links_menu': links_menu,
-    'title': titles,
-}
-
 
 def main(request):
+    content = {
+        'title': 'магазин',
+        'links_menu': links_menu,
+    }
+
     return render(request, 'mainapp/index.html', context=content)
 
 
 def products(request):
+    content = {
+        'title': 'продукты',
+        'links_menu': links_menu,
+    }
+
     return render(request, 'mainapp/products.html', context=content)
 
 
 def contact(request):
+    content = {
+        'title': 'контакты',
+        'links_menu': links_menu,
+    }
+
     return render(request, 'mainapp/contact.html', context=content)
