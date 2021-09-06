@@ -1,20 +1,19 @@
 from django.shortcuts import render
 from .models import ProductCategory, Product
-from django.http import HttpResponse
 
 links_menu = [
-    {'href': 'main', 'name': 'домой'},
+    {'href': 'index', 'name': 'домой'},
     {'href': 'product', 'name': 'продукты'},
     {'href': 'contact', 'name': 'контакты'},
 ]
 
 
-def main(request):
+def index(request):
+    title = 'магазин'
     content = {
-        'title': 'магазин',
+        'title': title,
         'links_menu': links_menu,
     }
-
     return render(request, 'mainapp/index.html', context=content)
 
 
@@ -49,8 +48,9 @@ def products_category(request, slug):
 
 
 def contact(request):
+    title = 'контакты'
     content = {
-        'title': 'контакты',
+        'title': title,
         'links_menu': links_menu,
     }
 

@@ -9,7 +9,7 @@
         </li>
         {% for category in categories %}
             <li>
-                <a href="{% url 'product_category' category.en_name %}">
+                <a href="{% url 'products_category' category.en_name %}">
                     {{ category.name }}
                 </a>
             </li>
