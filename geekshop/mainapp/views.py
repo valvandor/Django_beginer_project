@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import ProductCategory, Product
+from django.http import HttpResponse
 
 links_menu = [
     {'href': 'main', 'name': 'домой'},
@@ -17,9 +19,30 @@ def main(request):
 
 
 def products(request):
+    categories = ProductCategory.objects.all()
+    title = 'продукты'
+    products = Product.objects.all()
+
     content = {
-        'title': 'продукты',
+        'title': title,
         'links_menu': links_menu,
+        'categories': categories,
+        'products': products,
+    }
+    return render(request, 'mainapp/products.html', context=content)
+
+
+def products_category(request, slug):
+    categories = ProductCategory.objects.all()
+    active_category = ProductCategory.objects.get(en_name=slug)
+    title = f'продукты | {active_category.name}'
+    products = Product.objects.filter(category=active_category.id)
+
+    content = {
+        'title': title,
+        'links_menu': links_menu,
+        'categories': categories,
+        'products': products,
     }
 
     return render(request, 'mainapp/products.html', context=content)
