@@ -1,0 +1,22 @@
+[
+    {
+      "name": "дом",
+      "en_name": "home",
+      "description": "Мегауют и комфорт"
+    },
+    {
+      "name": "офис",
+      "en_name": "office",
+      "description": "Для продуктивной работы"
+    },
+    {
+      "name": "модерн",
+      "en_name": "modern",
+      "description": "Артхаус и остальная хрень"
+    },
+    {
+      "name": "классика",
+      "en_name": "classic",
+      "description": "Раритет да и только"
+    }
+]
