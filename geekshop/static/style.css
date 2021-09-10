@@ -84,7 +84,7 @@ html, body {
 	display: block;
 	width: 23px;
 	height: 23px;	
-	background-image: url(/static/img/basket.png);
+	background-image: url(/static/img/basket.svg);
 	position: absolute;
 	top: 63px;
 	left: 1210px;
@@ -893,17 +893,31 @@ td:first-child {
 	padding-left: 98px;
 	padding-right: 98px;
 	margin-top: 98px;
-	height: 651px; 
+	/* height: 651px;  */
+	display: flex;
+	flex-direction: column;
 }
+
+.card-product {
+	display: flex;
+	justify-content: center;
+	margin-top: 50px;
+}
+
 .details-slider {
 	width: 570px;
-	float: left;
 	margin-right: 30px;
 }
 .slider-product {
 	width: 570px;
 	height: 570px;
 }
+.product-image {
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+}
+
 .slider-control {
 	width: 420px;
 	height: 70px;
@@ -932,8 +946,6 @@ td:first-child {
 
 .description {
 	width: 535px;
-	float: right;
-	padding-left: 35px
 }
 .description .big-bold {
 	/*text-transform: capitalize;*/

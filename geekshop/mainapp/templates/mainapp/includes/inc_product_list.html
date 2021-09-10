@@ -1,0 +1,27 @@
+{% block show_products %}
+    <div class="details-products">
+        {% for product in products %}
+        <div class="card-product">
+            <div class="details-slider">
+                <div class="slider-product">
+                    <img class="product-image" src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+                </div>
+            </div>
+
+            <div class="description">
+                <h3 class="big-bold">{{ product.name|capfirst }}</h3>
+                <h3 class="red">горячее предложение</h3>
+                <p class="price"> {{ product.price }} <span>руб</span></p>
+                <a href="#" class="red-button">
+                    заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+
+                <div class="description-text">
+                <p>{{ product.short_description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock show_products %}

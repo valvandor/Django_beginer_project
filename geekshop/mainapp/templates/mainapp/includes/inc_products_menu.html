@@ -1,0 +1,19 @@
+{% load static %}
+{% block products_menu %}
+<div class="links clearfix">
+    <ul class="links-menu">
+        <li>
+            <a href="{% url 'product' %}" class="active">
+                все
+            </a>
+        </li>
+        {% for category in categories %}
+            <li>
+                <a href="{% url 'products_category' category.en_name %}">
+                    {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
