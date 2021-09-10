@@ -1,0 +1,8 @@
+# ignored files and directoties
+# PyCharm cache
+.idea/
+__pycache__/
+# db
+db.sqlite3
+# virtual
+venv/
