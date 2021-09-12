@@ -36,4 +36,4 @@ class Command(BaseCommand):
         # Удаляем пользователя, если он существует
         ShopUser.objects.filter(username="valvandor", is_superuser=True).delete()
         # Создаем суперпользователя при помощи менеджера модели
-        ShopUser.objects.create_superuser(username='valvandor', password='geekbrains', age=27)
+        ShopUser.objects.create_superuser(username='valvandor', password='geekbrains', date_birthday='1994-02-23')

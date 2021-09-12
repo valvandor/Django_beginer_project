@@ -18,18 +18,16 @@ html, body {
 }
 
 .login {
-    width: 50vw;
-	background-color: cornsilk;
-	height: 100vh;
+	background-color: rgb(220, 255, 239);
+	max-width: 500px;
 }
 
 .h2 {
-    color: darkblue;
-    margin: 10px 0;
+    color: hsl(hue, saturation, lightness);
 }
 
 .head {
-    background-color:thistle;
+    background-color:rgb(89, 201, 158);
 	padding: 40px 0;
 }
 
@@ -38,13 +36,26 @@ html, body {
 }
 
 .form-horizontal {
-	padding: 70px;
+	padding: 30px 70px;
 }
 
 .form-horizontal > p{
 	margin: 20px 0px;
 }
 
-.errorlist {
-    display: none;
+.form-control {
+	background-color: aliceblue;
+}
+
+
+.auth-p {
+	text-align: center;
+}
+.btn-round{
+	margin-bottom: 2px;
+}
+
+.btn-round:hover {
+	background-color: white;
+	border: 2px solid rgb(145, 236, 123);
 }
