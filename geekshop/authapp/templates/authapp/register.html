@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block heading %}
-  {{ heading|title }}
+  {{ heading|capfirst }}
 {% endblock %}
 {% block content %}
   <form class="form-horizontal" action="{% url 'auth:register' %}"

@@ -52,10 +52,21 @@ html, body {
 	text-align: center;
 }
 .btn-round{
-	margin-bottom: 2px;
+	margin-bottom: 5px;
 }
 
 .btn-round:hover {
 	background-color: white;
 	border: 2px solid rgb(145, 236, 123);
+}
+
+.user_avatar {
+    text-align: center;
+}
+
+.errorlist {
+	list-style-type: none;
+	padding-left: 0px;
+	font-weight: bolder;
+	color: rgb(185, 0, 0);
 }
