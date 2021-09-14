@@ -20,11 +20,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+import mainapp.views as mainapp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('mainapp.urls')),
-    path('auth/', include('authapp.urls', namespace='auth'))
+    path('auth/', include('authapp.urls', namespace='auth')),
+    path('products/', include('mainapp.urls', namespace='products')),
+    path('contact/', mainapp.contact, name='contact'),
+    path('', mainapp.index, name='index'),
 ]
 
 if settings.DEBUG:

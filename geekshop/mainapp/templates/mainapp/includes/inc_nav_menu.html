@@ -4,15 +4,29 @@
 
     <ul class="menu">
 
-        {% for link in links_menu %}
-            <li>
-                <a href="{% url link.href %}"
-                   class="{% if request.resolver_match.url_name == link.href %}
-                   active{% endif %}">
-                {{ link.name }}
-                </a>
-            </li>
-        {% endfor %}
+        <li>
+            <a href="{% url 'index' %}"
+               class="{% if request.resolver_match.url_name == 'index' %}
+               active{% endif %}">
+                Домой
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'products:products' %}"
+               class="{% if request.resolver_match.namespace == 'products' %}
+               active{% endif %}">
+                Продукты
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'contact' %}"
+               class="{% if request.resolver_match.url_name == 'contact' %}
+               active{% endif %}">
+                Контакты
+            </a>
+        </li>
+
         {% if user.is_authenticated %}
             <li>
                 <a href="{% url 'auth:edit' %}">
@@ -20,11 +34,13 @@
                 </a>
             </li>
         {% endif %}
+        <li>
         {% if user.is_authenticated %}
             <a href="{% url 'auth:logout' %}">выйти</a>
-            {% else %}
+        {% else %}
             <a href="{% url 'auth:login' %}">войти</a>
         {% endif %}
+        </li>
     </ul>
     <a href="#" class="search"></a>
     <a href="#" class="basket"></a>

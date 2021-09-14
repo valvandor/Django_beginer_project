@@ -3,13 +3,17 @@
 <div class="links clearfix">
     <ul class="links-menu">
         <li>
-            <a href="{% url 'product' %}" class="active">
+            <a href="{% url 'products:category' 'all' %}"
+               class="{% if request.resolver_match.kwargs.slug == 'all' %}
+                active {% endif %}">
                 все
             </a>
         </li>
         {% for category in categories %}
             <li>
-                <a href="{% url 'products_category' category.en_name %}">
+                <a href="{% url 'products:category' category.en_name %}"
+                   class="{% if request.resolver_match.kwargs.slug == category.en_name %}
+                   active {% endif %}">
                     {{ category.name }}
                 </a>
             </li>
