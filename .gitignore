@@ -7,4 +7,4 @@ db.sqlite3
 # virtual
 venv/
 # media files
-geekshop/media/products_images/
+geekshop/media/
