@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+
+from basketapp.models import Basket
 from .models import ProductCategory, Product
 
 
@@ -13,6 +15,9 @@ def index(request):
 def products(request, slug=None):
     title = f'продукты'
     categories = ProductCategory.objects.all()
+    basket = []
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
 
     if slug is not None:
         if slug == 'all':
@@ -27,6 +32,7 @@ def products(request, slug=None):
             'categories': categories,
             'category': category,
             'products': products,
+            'basket': basket,
         }
         return render(request, 'mainapp/products_list.html', content)
 
