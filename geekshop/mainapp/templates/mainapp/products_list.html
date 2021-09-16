@@ -1,0 +1,15 @@
+{% extends 'mainapp/base_product.html' %}
+{% load static %}
+
+{% block content_description %}
+	<div class="category_container">
+		<h2 class="category_heading">
+			{{ category.name|title }}
+		</h2>
+		<p class="category_description">
+			{{ category.description }}
+		</p>
+	</div>
+  	{% include 'mainapp/includes/inc_product_list.html' %}
+
+{% endblock %}

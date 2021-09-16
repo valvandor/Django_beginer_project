@@ -17,6 +17,7 @@ def products(request, slug=None):
     if slug is not None:
         if slug == 'all':
             products = Product.objects.all().order_by('price')
+            category = {'name': 'все', 'description': 'какое-то описание'}
         else:
             category = get_object_or_404(ProductCategory, en_name=slug)
             products = Product.objects.filter(category__en_name=slug).order_by('price')
@@ -24,9 +25,10 @@ def products(request, slug=None):
         content = {
             'title': title,
             'categories': categories,
+            'category': category,
             'products': products,
         }
-        return render(request, 'mainapp/products.html', content)
+        return render(request, 'mainapp/products_list.html', content)
 
     products = Product.objects.all()
 
