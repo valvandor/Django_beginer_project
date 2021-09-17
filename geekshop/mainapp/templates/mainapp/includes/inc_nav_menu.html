@@ -1,3 +1,4 @@
+{% load static %}
 {% block menu %}
 
     <a href="{% url 'index' %}" class="logo"></a>
@@ -41,10 +42,17 @@
             <a href="{% url 'auth:login' %}">войти</a>
         {% endif %}
         </li>
-        <a href="{% url 'basket:view' %}">
-            {% if basket %} {{ basket|length }} {% endif %}
-        </a>
+
     </ul>
     <a href="#" class="search"></a>
-    <a href="{% url 'basket:view' %}" class="basket"></a>
+    <a href="{% url 'basket:view' %}" class="basket">
+        <img src="{% static 'img/basket.svg' %}" alt="">
+        <span class="basket-desc">
+            {% if basket %}
+                {{ basket.0.total_cost|floatformat:0 }} руб
+                <br>
+                ({{ basket.0.total_quantity }} шт)
+            {% endif %}
+        </span>
+    </a>
 {% endblock menu %}

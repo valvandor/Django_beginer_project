@@ -22,6 +22,7 @@ html, body {
 	min-height: 100%;
 }
 
+
 .slider {
 	height: 800px;
 	background-image: url(/static/img/slider.jpg); 
@@ -81,13 +82,17 @@ html, body {
 	left: 1176px;
 }
 .basket {
-	display: block;
+	display: flex;
 	width: 23px;
 	height: 23px;	
-	background-image: url(/static/img/basket.svg);
 	position: absolute;
 	top: 63px;
 	left: 1210px;
+	text-decoration: none;
+}
+.basket-desc {
+	display: block;
+	min-width: 100px;
 }
 
 .clearfix:after {
