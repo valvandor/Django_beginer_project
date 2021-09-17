@@ -4,13 +4,13 @@ from basketapp.models import Basket
 from .models import ProductCategory, Product
 
 
-def get_basket(request):
-    return [] if not request.user.is_authenticated else Basket.objects.filter(user=request.user)
+def get_basket(user):
+    return [] if not user.is_authenticated else Basket.objects.filter(user=user)
 
 
 def index(request):
     title = 'магазин'
-    basket = get_basket(request)
+    basket = get_basket(request.user)
     content = {
         'title': title,
         'basket': basket,
@@ -21,7 +21,7 @@ def index(request):
 def products(request, slug=None):
     title = f'продукты'
     categories = ProductCategory.objects.all()
-    basket = get_basket(request)
+    basket = get_basket(request.user)
 
     if slug is not None:
         if slug == 'all':
@@ -54,7 +54,7 @@ def products(request, slug=None):
 
 def contact(request):
     title = 'контакты'
-    basket = get_basket(request)
+    basket = get_basket(request.user)
 
     content = {
         'title': title,
