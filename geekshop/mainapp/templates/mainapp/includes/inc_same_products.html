@@ -1,0 +1,28 @@
+{% load static %}
+{% block same_products %}
+
+	<div class="related">
+		<div class="title clearfix">
+			<h2>Похожие продукты</h2>
+			<a class="explore" href="{% url 'products:products_category' 'all' %}">
+				показать все <img src="{% static 'img/arrow.png' %}" alt="">
+			</a>
+		</div>
+
+		<div class="related__container-products">
+			{% for product in same_products %}
+			<div class="container-products__product-card">
+				<img class="product-card__img" src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+					<div class="product-card__desc">
+						<a href="{% url 'products:product_detail' product.pk %}">
+							<img src="{% static 'img/icon-hover.png' %}" alt="img">
+						</a>
+						<h4>{{ product.name }}</h4>
+						<p>{{ product.price }}</p>
+						<p>{{ product.short_desc }}</p>
+					</div>
+			</div>
+        	{% endfor %}
+		</div>
+	</div>
+{% endblock %}

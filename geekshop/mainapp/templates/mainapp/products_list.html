@@ -22,7 +22,7 @@
 				<div class="description">
 					<h3 class="big-bold">{{ product.name|capfirst }}</h3>
 					<p class="price"> {{ product.price }} <span>руб</span></p>
-					<a href="{% url 'basket:add' product.pk %}" class="red-button">
+					<a href="{% url 'products:product_detail' product.pk %}" class="red-button">
 						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
 					</a>
 					<div class="description-text">
