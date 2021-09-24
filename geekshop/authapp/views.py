@@ -40,6 +40,10 @@ def register(request):
     if request.method == 'POST':
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
         if register_form.is_valid():
+            register_form.save(commit=False)
+            register_form.date_birthday = request.POST['date_birthday']
+            print(f'\n\n{ register_form.date_birthday}\n\n')
+
             register_form.save()
             return HttpResponseRedirect(reverse('auth:login'))
     else:

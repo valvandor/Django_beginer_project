@@ -18,7 +18,7 @@ class ShopUser(AbstractUser):
         },
     )
     avatar = models.ImageField(upload_to='users_avatars', blank='True')
-    date_birthday = models.DateField(verbose_name='дата рождения', blank='True')
+    date_birthday = models.DateField(verbose_name='дата рождения', blank='True', null='True')
     first_name = models.CharField(verbose_name='имя', max_length=150)
     last_name = models.CharField(verbose_name='фамилия', max_length=150)
     email = models.EmailField(_('email address'))

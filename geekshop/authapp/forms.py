@@ -5,7 +5,21 @@ from .models import ShopUser
 from django.core.exceptions import ValidationError
 
 
-class ShopUserLoginForm(AuthenticationForm):
+class CleanDataMixin:
+    def clean_date_birthday(self):
+        import datetime
+        data = str(self.cleaned_data['date_birthday'])
+        today = datetime.datetime.now().date()
+        print(today, end='\n\n\n')
+        # get date from data for python
+        if data != 'None':
+            date_birth = datetime.date(*[int(i) for i in data.split('-')])
+            if int((today - date_birth).days) < 365 * 18 + 4:  # FIXME неточное количество дней
+                raise ValidationError("Вы слишком молоды!")
+            return data
+
+
+class ShopUserLoginForm(CleanDataMixin, AuthenticationForm):
     class Meta:
         model = ShopUser
         fields = ('username', 'password')
@@ -28,18 +42,8 @@ class ShopUserRegisterForm(UserCreationForm):
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
-    def clean_date_birthday(self):
-        import datetime
-        data = str(self.cleaned_data['date_birthday'])
-        today = datetime.datetime.now().date()
-        # get date from data for python
-        date_birth = datetime.date(*[int(i) for i in data.split('-')])
-        if int((today - date_birth).days) < 365 * 18 + 4:  # FIXME неточное количество дней
-            raise ValidationError("Вы слишком молоды!")
-        return data
 
-
-class ShopUserEditForm(UserChangeForm):
+class ShopUserEditForm(CleanDataMixin, UserChangeForm):
     class Meta:
         model = ShopUser
         fields = ('first_name', 'last_name', 'email', 'date_birthday', 'avatar', 'password')
@@ -51,13 +55,3 @@ class ShopUserEditForm(UserChangeForm):
             field.help_text = ''
             if field_name == 'password':
                 field.widget = HiddenInput()
-
-    def clean_date_birthday(self):
-        import datetime
-        data = str(self.cleaned_data['date_birthday'])
-        today = datetime.datetime.now().date()
-        # get date from data for python
-        date_birth = datetime.date(*[int(i) for i in data.split('-')])
-        if int((today - date_birth).days) < 365 * 18 + 4:  # FIXME неточное количество дней
-            raise ValidationError("Вы слишком молоды!")
-        return data
