@@ -1100,3 +1100,13 @@ td:first-child {
 	text-align: center;
 	margin-top: 20px;
 }
+
+.basket_container {
+	display: flex;
+	flex-direction: column;
+}
+
+.basket__link-home {
+	width: max-content;
+	align-self: center;
+}
