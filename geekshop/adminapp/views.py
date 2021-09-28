@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
 
-from adminapp.forms import ShopUserAdminEditForm
+from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm
 from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from mainapp.models import Product, ProductCategory
@@ -84,15 +84,52 @@ def categories(request):
 
 
 def category_create(request):
-    pass
+    title = 'категории/создание'
+
+    if request.method == 'POST':
+        category_form = ProductCategoryEditForm(request.POST, request.FILES)
+        if category_form.is_valid():
+            category_form.save()
+            return HttpResponseRedirect(reverse('admin:categories'))
+    else:
+        category_form = ProductCategoryEditForm()
+
+    content = {'title': title, 'form': category_form}
+
+    return render(request, 'adminapp/category_update.html', content)
 
 
-def category_update(request, pk):
-    pass
+def category_update(request, category_name):
+    title = 'категории/редактирование'
+
+    edit_category = get_object_or_404(ProductCategory, en_name=category_name)
+    if request.method == 'POST':
+        category_form = ProductCategoryEditForm(request.POST, request.FILES)
+        if category_form.is_valid():
+            category_form.save()
+            return HttpResponseRedirect(reverse('admin:category_update', args=[edit_category.en_name]))
+    else:
+        category_form = ProductCategoryEditForm(instance=edit_category)
+
+    content = {'title': title, 'update_form': category_form}
+
+    return render(request, 'adminapp/user_update.html', content)
 
 
-def category_delete(request, pk):
-    pass
+def category_delete(request, category_name):
+    title = 'категории/удаление'
+
+    category = get_object_or_404(ProductCategory, en_name=category_name)
+
+    if request.method == 'POST':
+        # вместо удаления — сделаем неактивным
+        category.is_active = False
+        category.save()
+        return HttpResponseRedirect(reverse('admin:categories'))
+
+    content = {'title': title, 'category_to_delete': category}
+
+    return render(request, 'adminapp/category_delete.html', content)
 
 
 def products(request, category_name):
