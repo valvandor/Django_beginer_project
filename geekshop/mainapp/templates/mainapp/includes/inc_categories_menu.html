@@ -10,13 +10,16 @@
             </a>
         </li>
         {% for category in categories %}
-            <li>
-                <a href="{% url 'products:products_category' category.en_name %}"
-                   class="{% if request.resolver_match.kwargs.category_name == category.en_name %}
-                   active {% endif %}">
-                    {{ category.name }}
-                </a>
-            </li>
+            {% if category.is_active %}
+                <li>
+                    <a href="{% url 'products:products_category' category.en_name %}"
+                       class="{% if request.resolver_match.kwargs.category_name == category.en_name %}
+                       active {% endif %}">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% endif %}
+
         {% endfor %}
     </ul>
 </div>
