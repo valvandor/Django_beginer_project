@@ -73,6 +73,7 @@ def products(request, category_name=None, page=1):
         'title': title,
         'categories': categories,
         'hot_product': hot_product,
+        'slug': hot_product.category.en_name,
         'same_products': same_products,
         'basket': basket,
     }
@@ -89,6 +90,7 @@ def product_detail(request, product_id):
         'title': title,
         'categories': categories,
         'active_product': active_product,
+        'slug': active_product.category.en_name,
         'same_products': same_products,
         'basket': basket,
     }
