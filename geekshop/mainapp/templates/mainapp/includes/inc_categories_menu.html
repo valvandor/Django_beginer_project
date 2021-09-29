@@ -3,7 +3,7 @@
 <div class="links clearfix">
     <ul class="links-menu">
         <li>
-            <a href="{% url 'products:products_category' 'all' %}"
+            <a href="{% url 'products:products_category' 'all'  %}"
                class="{% if request.resolver_match.kwargs.category_name == 'all' %}
                 active {% endif %}">
                 все

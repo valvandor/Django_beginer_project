@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 
 from basketapp.models import Basket
@@ -29,10 +30,43 @@ def get_same_products(hot_product):
     return same_products
 
 
-def products_main(request):
-    title = 'продукты'
+def products(request, category_name=None, page=1):
     categories = ProductCategory.objects.all()
     basket = get_basket(request.user)
+
+    if category_name is not None:
+        # processing the pseudo category
+        if category_name == 'all':
+            products = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
+            category = {'name': 'все', 'en_name': 'all', 'description': 'какое-то описание'}
+            title = f'продукты | все'
+        # processing a category from a database
+        else:
+            category = get_object_or_404(ProductCategory, en_name=category_name)
+            products = Product.objects.filter(category__en_name=category_name,
+                                              is_active=True,
+                                              category__is_active=True).order_by('price')
+            title = f'продукты | {category.name}'
+
+        paginator = Paginator(products, 3)
+        try:
+            products_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            products_paginator = paginator.page(1)
+        except EmptyPage:
+            products_paginator = paginator.page(paginator.num_pages)
+        content = {
+            'title': title,
+            'categories': categories,
+            'category': category,
+            'products': products_paginator,
+            'basket': basket,
+        }
+
+        return render(request, 'mainapp/products_list.html', content)
+
+    # => first visit to the "products"
+    title = 'продукты'
     hot_product = get_hot_product()
     same_products = get_same_products(hot_product)
     content = {
@@ -43,45 +77,6 @@ def products_main(request):
         'basket': basket,
     }
     return render(request, 'mainapp/products_main.html', content)
-
-
-def products_category(request, category_name=None):
-    categories = ProductCategory.objects.all()
-    basket = get_basket(request.user)
-
-    if category_name is not None:
-        # processing the pseudo category
-        if category_name == 'all':
-            products = Product.objects.all().order_by('price')
-            category = {'name': 'все', 'description': 'какое-то описание'}
-            title = 'продукты | все'
-        # processing a category from a database
-        else:
-            category = get_object_or_404(ProductCategory, en_name=category_name)
-            products = Product.objects.filter(category__en_name=category_name).order_by('price')
-            title = f'продукты | {category.name}'
-
-        content = {
-            'title': title,
-            'categories': categories,
-            'category': category,
-            'products': products,
-            'basket': basket,
-        }
-        return render(request, 'mainapp/products_list.html', content)
-
-    products = Product.objects.all()
-
-    title = 'продукты'
-
-    content = {
-        'title': title,
-        'categories': categories,
-        'products': products,
-        'basket': basket,
-    }
-
-    return render(request, 'mainapp/products_main.html', context=content)
 
 
 def product_detail(request, product_id):
