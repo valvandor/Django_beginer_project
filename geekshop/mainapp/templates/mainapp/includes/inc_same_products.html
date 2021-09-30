@@ -1,4 +1,5 @@
 {% load static %}
+{% load media_tags %}
 {% block same_products %}
 
 	<div class="related">
@@ -12,7 +13,7 @@
 		<div class="related__container-products">
 			{% for product in same_products %}
 			<div class="container-products__product-card">
-				<img class="product-card__img" src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+				<img class="product-card__img" src="{{ product.image|media_folder_products }}" alt="{{ product.short_desc }}">
 					<div class="product-card__desc">
 						<a href="{% url 'products:product_detail' product.pk %}">
 							<img src="{% static 'img/icon-hover.png' %}" alt="img">
