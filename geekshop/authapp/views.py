@@ -47,11 +47,11 @@ def register(request):
         if register_form.is_valid():
             user = register_form.save()
             if send_verify_mail(user):
-                print('сообщение подтверждения отправлено')
-                return HttpResponseRedirect(reverse('auth:login'))
+                message = 'сообщение подтверждения отправлено'
             else:
-                print('ошибка отправки сообщения')
-                return HttpResponseRedirect(reverse('auth:login'))
+                message = 'ошибка отправки сообщения'
+            content = {'message': message}
+            return render(request, 'authapp/verify_message.html', content)
     else:
         register_form = ShopUserRegisterForm()
         content = {'title': title, 'heading': heading, 'form': register_form}
