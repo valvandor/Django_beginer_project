@@ -8,3 +8,6 @@ db.sqlite3
 venv/
 # media files
 geekshop/media/
+
+# email messages logs
+tmp/
