@@ -1,0 +1,15 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+{% block content %}
+<p>
+  {{ message }}
+</p>
+<br>
+<button class="btn btn-round form-control">
+<a href="{% url 'auth:login' %}" class="">войти</a>
+</button>
+<button class="btn btn-round form-control">
+<a href="{% url 'index' %}" class="">на главную</a>
+</button>
+
+{% endblock %}
