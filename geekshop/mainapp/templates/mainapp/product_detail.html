@@ -1,0 +1,26 @@
+{% extends 'mainapp/base_product.html' %}
+{% load static %}
+
+{% block content_description %}
+	<div class="details-products">
+		<div class="card-product">
+			<div class="details-slider">
+				<div class="slider-product">
+					<img src="/media/{{ active_product.image }}">
+				</div>
+			</div>
+			<div class="description">
+				<h3 class="big-bold">{{ active_product.name }}</h3>
+				<p class="price">{{ active_product.price }}&nbsp<span>руб</span></p>
+				<a href="{% url 'basket:add' active_product.pk %}" class="red-button">
+					добавить в корзину <i class="fa fa-chevron-right" aria-hidden="true"></i>
+				</a>
+			<div class="description-text">
+				{{ active_product.description }}
+			</div>
+			</div>
+		</div>
+	</div>
+
+	{% include 'mainapp/includes/inc_same_products.html' %}
+{% endblock %}

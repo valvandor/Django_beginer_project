@@ -5,24 +5,14 @@ class ProductCategory(models.Model):
     name = models.CharField(verbose_name='имя категории', max_length=64, unique=True)
     en_name = models.SlugField(verbose_name='имя категории на английском', max_length=64, unique=True)
     description = models.TextField(verbose_name='описание', blank=True)
+    is_active = models.BooleanField(verbose_name='активна', default=True)
 
     def __str__(self):
         return self.name
 
 
-class Product(models.Model):
-    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
-    name = models.CharField(verbose_name='имя продукта', max_length=128)
-    image = models.ImageField(upload_to='products_images', blank=True)
-    short_desc = models.CharField(verbose_name='краткое описание продукта', max_length=60, blank=True)
-    description = models.TextField(verbose_name='описание продукта', blank=True)
-    price = models.DecimalField(verbose_name='цена продукта', max_digits=8, decimal_places=2, default=0)
-    quantity = models.PositiveIntegerField(verbose_name='количество на складе', default=0)
-
-    def __str__(self):
-        return f"{self.name} ({self.category.name})"
-
-    @staticmethod  # FIXME what are the possible good options to leave it inside the class?
+class ProductBootstrapMixin:
+    @staticmethod
     def _get_image(img_url, file_name):
         from django.conf import settings
         import requests
@@ -35,7 +25,7 @@ class Product(models.Model):
         return path_for_get
 
     @staticmethod
-    def _bootstrap(count=10, locale='ru'):
+    def _bootstrap(count=5, locale='ru'):
         from mimesis import Internet
         from random import randint
         from mimesis import Text
@@ -50,10 +40,24 @@ class Product(models.Model):
             product = Product(
                 category=get_random_item(categories),
                 name=Text('ru').word(),
-                image=Product._get_image(img_url, image_name),  # FIXME this is not good
+                image=Product._get_image(img_url, image_name),
                 short_desc=' '.join(Text('ru').words(7)),
                 description=' '.join(Text('ru').words(17)),
                 price=randint(100, 10000),
                 quantity=randint(1, 100)
             )
             product.save()
+
+
+class Product(ProductBootstrapMixin, models.Model):
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name='имя продукта', max_length=128)
+    image = models.ImageField(upload_to='products_images', blank=True)
+    short_desc = models.CharField(verbose_name='краткое описание продукта', max_length=60, blank=True)
+    description = models.TextField(verbose_name='описание продукта', blank=True)
+    price = models.DecimalField(verbose_name='цена продукта', max_digits=8, decimal_places=2, default=0)
+    quantity = models.PositiveIntegerField(verbose_name='количество на складе', default=0)
+    is_active = models.BooleanField(verbose_name='активна', default=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.category.name})"

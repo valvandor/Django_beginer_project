@@ -10,10 +10,11 @@
   </title>
   {% block css %}
     <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
-    <link rel="stylesheet" href="{% static 'style/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'style/style.css' %}">
-  {% endblock %}
+    <link rel="stylesheet" href="{% static 'style/bootstrap.min.css' %}">
+    {% endblock %}
   {% block js %}
+      <script src="{% static 'js/basket_scripts.js' %}"></script>
   {% endblock %}
   </head>
   <body>
