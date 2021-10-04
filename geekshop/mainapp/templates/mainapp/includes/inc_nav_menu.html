@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a href="{% url 'products:products_main' %}"
+            <a href="{% url 'products:index' %}"
                class="{% if request.resolver_match.namespace == 'products' %}
                active{% endif %}">
                 Продукты
@@ -34,6 +34,11 @@
                   {{ user.first_name|default:'Пользователь' }}
                 </a>
             </li>
+        {% endif %}
+        {% if user.is_superuser %}
+          <li>
+            <a href="{% url 'admin:users' %}">админка</a>
+          </li>
         {% endif %}
         <li>
         {% if user.is_authenticated %}

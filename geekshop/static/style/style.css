@@ -1110,3 +1110,8 @@ td:first-child {
 	width: max-content;
 	align-self: center;
 }
+
+.not_active {
+	background-color: grey;
+	opacity: 0.6;
+}

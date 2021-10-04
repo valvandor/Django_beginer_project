@@ -1,0 +1,17 @@
+{% load static %}
+{% block paginator %}
+
+<div class="paginator">
+  {% if products.has_previous %}
+    <a href="{% url 'products:page' category.en_name products.previous_page_number %}">
+      <
+    </a>
+  {% endif %}
+  <span class="current"> страница {{ products.number }} из {{ products.paginator.num_pages }}	</span>
+  {% if products.has_next %}
+    <a href="{% url 'products:page' category.en_name products.next_page_number %}">
+      >
+    </a>
+  {% endif %}
+</div>
+{% endblock %}
