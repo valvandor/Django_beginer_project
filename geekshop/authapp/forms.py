@@ -1,3 +1,6 @@
+import hashlib
+from random import random
+
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.forms import HiddenInput
 
@@ -10,13 +13,12 @@ class CleanDataMixin:
         import datetime
         data = str(self.cleaned_data['date_birthday'])
         today = datetime.datetime.now().date()
-        print(today, end='\n\n\n')
         # get date from data for python
-        if data != 'None':
-            date_birth = datetime.date(*[int(i) for i in data.split('-')])
-            if int((today - date_birth).days) < 365 * 18 + 4:  # FIXME неточное количество дней
-                raise ValidationError("Вы слишком молоды!")
-            return data
+        date_birth = datetime.date(*[int(i) for i in data.split('-')])
+        if int((today - date_birth).days) < 365 * 18 + 4:  # FIXME неточное количество дней
+            print('Date_error (it works)')
+            raise ValidationError("Вы слишком молоды!")  # FIXME Валидатор не работает — сайт падает
+        return data
 
 
 class ShopUserLoginForm(CleanDataMixin, AuthenticationForm):
@@ -28,10 +30,10 @@ class ShopUserLoginForm(CleanDataMixin, AuthenticationForm):
         super(ShopUserLoginForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-            field.help_text = ''  # FIXME все равно показывает вспомогательные сообщения
+            field.help_text = ''
 
 
-class ShopUserRegisterForm(UserCreationForm):
+class ShopUserRegisterForm(CleanDataMixin, UserCreationForm):
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'last_name', 'password1', 'password2', 'email', 'date_birthday', 'avatar')
@@ -41,6 +43,14 @@ class ShopUserRegisterForm(UserCreationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+
+    def save(self):
+        user = super(ShopUserRegisterForm, self).save()
+        user.is_active = False
+        salt = hashlib.sha1(str(random()).encode('utf8')).hexdigest()[:6]
+        user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
+        user.save()
+        return user
 
 
 class ShopUserEditForm(CleanDataMixin, UserChangeForm):

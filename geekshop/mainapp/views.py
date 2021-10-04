@@ -14,7 +14,6 @@ def index(request):
     basket = get_basket(request.user)
     content = {
         'title': title,
-        'basket': basket,
     }
     return render(request, 'mainapp/index.html', context=content)
 
@@ -60,7 +59,6 @@ def products(request, category_name=None, page=1):
             'categories': categories,
             'category': category,
             'products': products_paginator,
-            'basket': basket,
         }
 
         return render(request, 'mainapp/products_list.html', content)
@@ -75,7 +73,6 @@ def products(request, category_name=None, page=1):
         'hot_product': hot_product,
         'slug': hot_product.category.en_name,
         'same_products': same_products,
-        'basket': basket,
     }
     return render(request, 'mainapp/products_main.html', content)
 
@@ -92,7 +89,6 @@ def product_detail(request, product_id):
         'active_product': active_product,
         'slug': active_product.category.en_name,
         'same_products': same_products,
-        'basket': basket,
     }
     return render(request, 'mainapp/product_detail.html', content)
 
@@ -103,7 +99,6 @@ def contact(request):
 
     content = {
         'title': title,
-        'basket': basket,
     }
 
     return render(request, 'mainapp/contact.html', context=content)
