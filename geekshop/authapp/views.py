@@ -96,4 +96,4 @@ def verify(request, email, activation_key):
             return render(request, 'authapp/verification.html')
     except Exception as e:
         print(f'error activation user : {e.args}')
-        return HttpResponseRedirect(reverse('main'))
+        return HttpResponseRedirect(reverse('index'))
