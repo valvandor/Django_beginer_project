@@ -1,0 +1,34 @@
+[
+  {"category": "дом",
+    "name": "damn chair",
+    "image": "products_images/76-01-600x600.jpg",
+    "short_desc": "The best",
+    "description": "The best in the world",
+    "price": "3000",
+    "quantity": "4"
+  },
+    {"category": "модерн",
+    "name": "damn модерн chair",
+    "image": "products_images/_MG_1135.jpg",
+    "short_desc": "The best",
+    "description": "The best in the world",
+    "price": "6000",
+    "quantity": "2"
+  },
+    {"category": "классика",
+    "name": "damn классический chair",
+    "image": "products_images/stul_Sintu_s_pupitrom-600x600.jpg",
+    "short_desc": "The best",
+    "description": "The best in the world",
+    "price": "1000",
+    "quantity": "11"
+  },
+  {"category": "офис",
+    "name": "damn офис chair",
+    "image": "products_images/-б-600x600.jpg",
+    "short_desc": "The best",
+    "description": "The best in the world",
+    "price": "4000",
+    "quantity": "5"
+  }
+]
