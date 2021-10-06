@@ -2,9 +2,9 @@ import hashlib
 from random import random
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from django.forms import HiddenInput
+from django.forms import HiddenInput, ModelForm
 
-from .models import ShopUser
+from .models import ShopUser, ShopUserProfile
 from django.core.exceptions import ValidationError
 
 
@@ -65,3 +65,14 @@ class ShopUserEditForm(CleanDataMixin, UserChangeForm):
             field.help_text = ''
             if field_name == 'password':
                 field.widget = HiddenInput()
+
+
+class ShopUserProfileEditForm(ModelForm):
+    class Meta:
+        model = ShopUserProfile
+        fields = ('tagline', 'aboutMe', 'gender')
+
+    def __init__(self, *args, **kwargs):
+        super(ShopUserProfileEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
