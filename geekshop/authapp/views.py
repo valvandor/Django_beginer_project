@@ -28,7 +28,7 @@ def login(request):
             if 'next' in request.POST.keys():
                 return HttpResponseRedirect(request.POST['next'])
             else:
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('main'))
 
     content = {'title': title, 'heading': heading, 'form': login_form, 'next': next}
     return render(request, 'authapp/login.html', content)
@@ -36,7 +36,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('main'))
 
 
 def register(request):
@@ -100,4 +100,4 @@ def verify(request, email, activation_key):
             return render(request, 'authapp/verification.html')
     except Exception as e:
         print(f'error activation user : {e.args}')
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main'))
