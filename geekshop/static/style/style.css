@@ -1115,3 +1115,7 @@ td:first-child {
 	background-color: grey;
 	opacity: 0.6;
 }
+
+.menu .dropdown-menu a:hover {
+    border-bottom: none;
+}
