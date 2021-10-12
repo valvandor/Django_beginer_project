@@ -29,5 +29,5 @@ class Basket(models.Model):
         return _totalcost
 
     @staticmethod
-    def get_items(request):
-        return Basket.objects.filter(user=request.user)
+    def get_items(user):
+        return Basket.objects.filter(user=user)
