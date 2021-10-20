@@ -11,3 +11,9 @@ geekshop/media/
 
 # email messages logs
 tmp/
+
+#
+migrations/
+
+# secrets
+.secrets.yaml

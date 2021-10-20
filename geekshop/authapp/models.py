@@ -1,8 +1,9 @@
 from datetime import timedelta
-
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
@@ -21,7 +22,7 @@ class ShopUser(AbstractUser):
         },
     )
     avatar = models.ImageField(upload_to='users_avatars', blank='True')
-    date_birthday = models.DateField(verbose_name='дата рождения')
+    date_birthday = models.DateField(verbose_name='дата рождения', default=(now() - timedelta(days=365*18+5)))
     first_name = models.CharField(verbose_name='имя', max_length=150)
     last_name = models.CharField(verbose_name='фамилия', max_length=150)
     email = models.EmailField(_('email address'))
@@ -34,3 +35,26 @@ class ShopUser(AbstractUser):
             return False
         else:
             return True
+
+
+class ShopUserProfile(models.Model):
+    MALE = 'M'
+    FEMALE = 'W'
+
+    GENDER_CHOICES = (
+        (MALE, 'М'),
+        (FEMALE, 'Ж'),
+    )
+    user = models.OneToOneField(ShopUser, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
+    tagline = models.CharField(verbose_name='теги', max_length=128, blank=True)
+    aboutMe = models.TextField(verbose_name='о себе', max_length=512, blank=True)
+    gender = models.CharField(verbose_name='пол', max_length=1, choices=GENDER_CHOICES, blank=True)
+
+    @receiver(post_save, sender=ShopUser)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            ShopUserProfile.objects.create(user=instance)
+
+    @receiver(post_save, sender=ShopUser)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.shopuserprofile.save()

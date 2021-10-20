@@ -16,11 +16,11 @@ def load_from_json(file_name):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        # categories = load_from_json('categories')
-        # ProductCategory.objects.all().delete()
-        # for category in categories:
-        #     new_category = ProductCategory(**category)
-        #     new_category.save()
+        categories = load_from_json('categories')
+        ProductCategory.objects.all().delete()
+        for category in categories:
+            new_category = ProductCategory(**category)
+            new_category.save()
 
         Product._bootstrap()
 

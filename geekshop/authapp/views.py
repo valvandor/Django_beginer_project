@@ -2,8 +2,9 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import auth
+from django.db import transaction
 from django.shortcuts import render, HttpResponseRedirect
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from django.urls import reverse
 
 from authapp.models import ShopUser
@@ -23,11 +24,11 @@ def login(request):
 
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
-            auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             if 'next' in request.POST.keys():
                 return HttpResponseRedirect(request.POST['next'])
             else:
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('main'))
 
     content = {'title': title, 'heading': heading, 'form': login_form, 'next': next}
     return render(request, 'authapp/login.html', content)
@@ -35,7 +36,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('main'))
 
 
 def register(request):
@@ -58,20 +59,23 @@ def register(request):
         return render(request, 'authapp/register.html', content)
 
 
+@transaction.atomic
 def edit(request):
     title = 'редактирование'
     heading = 'редактирование профиля'
 
     if request.method == "POST":
         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
+        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and profile_form.is_valid():
             edit_form.save()
             return HttpResponseRedirect(reverse('auth:edit'))
     # method is GET
     else:
         edit_form = ShopUserEditForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
-    content = {'title': title, 'heading': heading, 'form': edit_form}
+    content = {'title': title, 'heading': heading, 'form': edit_form, 'profile_form': profile_form}
     return render(request, 'authapp/edit.html', content)
 
 

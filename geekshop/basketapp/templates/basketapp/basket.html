@@ -4,6 +4,7 @@
     <div class="basket_list">
         {% include 'basketapp/includes/inc_basket_list.html' %}
     </div>
-    <a class="btn btn-primary basket__link-home" href="{% url 'index' %}" role="button">на главную</a>
+    <a class="btn btn-primary basket__link-home" href="{%  url 'ordersapp:order_create' %}" role="button">сделать заказ</a>
+    <a class="btn btn-primary basket__link-home" href="{% url 'main' %}" role="button">на главную</a>
 
 {% endblock %}
