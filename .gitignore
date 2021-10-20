@@ -12,5 +12,8 @@ geekshop/media/
 # email messages logs
 tmp/
 
-# vk secrets
-vk.json
+#
+migrations/
+
+# secrets
+.secrets.yaml
