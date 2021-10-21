@@ -6,9 +6,10 @@ default:
   EMAIL_HOST_USER: ""
   EMAIL_HOST_PASSWORD: ""
   EMAIL_USE_SSL: ""
-  SOCIAL_AUTH_VK_OAUTH2_KEY: ""
+  SOCIAL_AUTH_VK_OAUTH2_KEY: "7963716"
   SOCIAL_AUTH_VK_OAUTH2_SECRET: ""
   DEBUG: ""
+  PASSWORD_DB: ""
 
 development:
   DOMAIN_NAME: "http://localhost:8000"
@@ -17,12 +18,12 @@ development:
   EMAIL_HOST_USER: 'django@geekshop.local'
   EMAIL_HOST_PASSWORD: 'geekshop'
   EMAIL_USE_SSL: False
-  SOCIAL_AUTH_VK_OAUTH2_KEY: "7963716"
   SOCIAL_AUTH_VK_OAUTH2_SECRET: "xxxxxxxxxxxxxxxx"
   DEBUG: True
 
 production:
 
-  SOCIAL_AUTH_VK_OAUTH2_KEY: "7963716"
+  EMAIL_PORT: '25'
+  EMAIL_USE_SSL: False
   SOCIAL_AUTH_VK_OAUTH2_SECRET: "xxxxxxxxxxxxxxxx"
   DEBUG: False
